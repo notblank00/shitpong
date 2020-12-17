@@ -125,4 +125,4 @@ function ai() {
 
 
 ctx.fillText("Press space", 200, 200)
-
+ctx.fillText("Also control yourself with W/S keys", 200, 250)
