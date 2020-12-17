@@ -1,18 +1,20 @@
 var canvas = document.getElementById("pongCanvas");   // E
 var ctx = canvas.getContext("2d");
-var pos = {x : canvas.width / 2, y : 3 * canvas.height / 4};
 let rand = Math.random();
 const ballspeed = 15
-var vct = {x : 0, y : -14 * rand};
-vct.x = - Math.sqrt(ballspeed ** 2 - vct.y ** 2);
+var vct = {x : 10, y : -10};
 var flag = 'none';
 var ly = canvas.height / 2;
 var ry = ly;
 const len = 120;
 const w = 10;
 const spd = 60;
+const errFac = 10;
+const reactionSpeed = 20;
 const r = 20;
+var pos = {x : 40, y : 20 + Math.random() * (canvas.height - 40)};
 var key;
+var aiInterval;
 canvas.style.width = window.innerWidth + "px";
 canvas.style.height = window.innerHeight + "px";
 document.addEventListener('keypress', keyPress);
@@ -53,14 +55,18 @@ function draw() {
         if(pos.x - r < w) {
             if(ly + len / 2 < pos.y || ly - len / 2 > pos.y)
                 flag = 'lose';
-            else
+            else {
                 vct.x *= -1;
+                aiInterval = setInterval(ai, reactionSpeed);
+            }
         }
         if(pos.x + r > canvas.width - w) {
             if(ry + len / 2 < pos.y || ry - len / 2 > pos.y)
                 flag = 'win';
-            else
+            else {
                 vct.x *= -1;
+                clearInterval(aiInterval);
+            }
         }
         if(pos.y - r < 0 || pos.y + r > canvas.height) {
             vct.y *= -1;
@@ -85,15 +91,13 @@ function draw() {
 }
 
 function ai() {
-    if(pos.y > ry)
+    console.log('ai called');
+    err = (Math.random() - 0.5) * errFac;
+    if(pos.y > ry + len / 2 + err)
         ry += spd;
-    if(pos.y < ry)
+    else if(pos.y < ry - len / 2 - err)
         ry -= spd;
-    if(ry + len / 2 > 720)
-        ry = 720 - len / 2;
-    if(ry - len / 2 < 0)
-        ry = len / 2;
 }
 
 setInterval(draw, 20)
-setInterval(ai, 100);
+aiInterval = setInterval(ai, reactionSpeed);
