@@ -2,7 +2,6 @@ var canvas = document.getElementById("pongCanvas");   // E
 var ctx = canvas.getContext("2d");
 const bleep = new Audio('bleep.mp3');
 const bloop = new Audio('bloop.mp3');
-bleep.play();
 let rand = Math.random();
 const ballspeed = 15
 var vct = {x : 10, y : -10};
@@ -40,6 +39,7 @@ function keyPress(e) {
         drawInterval = setInterval(draw, 20);
         aiInterval = setInterval(ai, reactionSpeed);
         gameStarted = true;
+        bleep.play();
     }
 }
 
