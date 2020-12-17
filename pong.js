@@ -6,6 +6,7 @@ bleep.play();
 let rand = Math.random();
 const ballspeed = 15
 var vct = {x : 10, y : -10};
+var gameStarted = false;
 var flag = 'none';
 var ly = canvas.height / 2;
 var ry = ly;
@@ -35,9 +36,10 @@ function keyPress(e) {
         if(ly + len / 2 > 720)
             ly = 720 - len / 2;
     }
-    else if(e.code == "Space") {
+    else if(e.code == "Space" && !gameStarted) {
         drawInterval = setInterval(draw, 20);
         aiInterval = setInterval(ai, reactionSpeed);
+        gameStarted = true;
     }
 }
 
@@ -51,7 +53,7 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.fillStyle = "#FFFFFF"
-        ctx.fillText("Fuck you!", 100, 100);
+        ctx.fillText("You are shit!", 100, 100);
         ctx.closePath();
         clearInterval(drawInterval);
     }
@@ -59,7 +61,7 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.fillStyle = "#FFFFFF"
-        ctx.fillText("Fuck me!", 100, 100);
+        ctx.fillText("Well, I am shit...", 100, 100);
         ctx.closePath();
         clearInterval(drawInterval);
     }
@@ -121,4 +123,6 @@ function ai() {
         ry -= spd;
 }
 
+
+ctx.fillText("Press space", 200, 200)
 
